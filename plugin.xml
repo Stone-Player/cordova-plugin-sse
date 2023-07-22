@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-sse_ios" version="1.0"
+	xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>cordova-plugin-sse_ios</name>
+	<js-module name="cordova-plugin-sse_ios" src="www/cordova-plugin-sse_ios.js">
+		<clobbers target="cordova.plugins.sse" />
+	</js-module>
+	<platform name="ios">
+		<hook type="before_plugin_install" src="hooks/add_swift_support.js" />
+		<podspec>
+            <config>
+                <source url="https://cdn.cocoapods.org/"/>
+            </config>
+            <pods use-frameworks="true">
+                <pod name="AlamofireEventSource" spec="~> 1.2"/>
+            </pods>
+        </podspec>
+		<config-file parent="/*" target="config.xml">
+			<feature name="SSEPlugin">
+				<param name="ios-package" value="SSEPlugin" />
+			</feature>
+		</config-file>
+		<source-file src="src/ios/SSEPlugin.swift" />
+	</platform>
+</plugin>

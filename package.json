@@ -1,0 +1,14 @@
+{
+  "name": "cordova-plugin-sse_ios",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "cordova-plugin-sse_ios",
+    "platforms": [ "ios" ]
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "André Grillo - OutSystems",
+  "license": "MIT"
+}
