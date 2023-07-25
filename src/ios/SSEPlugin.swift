@@ -3,9 +3,14 @@ import AlamofireEventSource
 
 @objc(SSEPlugin) class SSEPlugin: CDVPlugin {
     var eventSourceRequest: Alamofire.Request?
+    var callbackId: String?
 
     @objc(startEventSource:)
     func startEventSource(command: CDVInvokedUrlCommand) {
+        if callbackId != nil {
+            self.stopEventSourceOldCallback(callbackId: callbackId!)
+        }
+        callbackId = command.callbackId
         let urlString = command.arguments[0] as! String
         guard let url = URL(string: urlString) else {
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Invalid URL")
@@ -19,13 +24,15 @@ import AlamofireEventSource
             switch eventSource.event {
             case .message(let message):
                 let result: [String: Any] = [
-                    "event": message.event ?? "Null",
-                    "serverMessage": message.data ?? "Null"
+                    "event": message.event ?? "NullEvent",
+                    "serverMessage": message.data ?? "NullMessage"
                 ]
                 
                 do {
                     let jsonData = try JSONSerialization.data(withJSONObject: result, options: [])
                     if let jsonString = String(data: jsonData, encoding: .utf8) {
+                        if result["event"] as! String == "sseHeartbeat" {
+                        }
                         self.sendPluginResult(callbackId: command.callbackId, status: CDVCommandStatus_OK, message: jsonString, keepCallback: true)
                     } else {
                         self.sendPluginResult(callbackId: command.callbackId, status: CDVCommandStatus_ERROR, message: "Error serializing JSON")
@@ -40,12 +47,18 @@ import AlamofireEventSource
         }
     }
 
-    @objc(stopEventSource:)
-    func stopEventSource(command: CDVInvokedUrlCommand) {
+    func stopEventSourceOldCallback(callbackId: String) {
         self.eventSourceRequest?.cancel()
         self.eventSourceRequest = nil
-        sendPluginResult(callbackId: command.callbackId, status: CDVCommandStatus_OK, message: "Event Source Stopped")
+        sendPluginResult(callbackId: callbackId, status: CDVCommandStatus_OK, message: "Event Source Stopped")
     }
+    
+//    @objc(stopEventSource:)
+//    func stopEventSource(command: CDVInvokedUrlCommand) {
+//        self.eventSourceRequest?.cancel()
+//        self.eventSourceRequest = nil
+//        sendPluginResult(callbackId: self.callbackId, status: CDVCommandStatus_OK, message: "Event Source Stopped")
+//    }
     
     func sendPluginResult(callbackId: String, status: CDVCommandStatus, message: String, keepCallback: Bool = false) {
             var pluginResult = CDVPluginResult()
