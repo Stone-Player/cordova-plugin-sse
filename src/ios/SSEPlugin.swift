@@ -57,7 +57,7 @@ import AlamofireEventSource
     func stopEventSource(command: CDVInvokedUrlCommand) {
         self.eventSourceRequest?.cancel()
         self.eventSourceRequest = nil
-        sendPluginResult(callbackId: self.callbackId, status: CDVCommandStatus_OK, message: "Event Source Stopped")
+        sendPluginResult(callbackId: command.callbackId, status: CDVCommandStatus_OK, message: "Event Source Stopped")
     }
     
     func sendPluginResult(callbackId: String, status: CDVCommandStatus, message: String, keepCallback: Bool = false) {
