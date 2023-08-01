@@ -50,7 +50,7 @@ import AlamofireEventSource
     func stopEventSourceOldCallback(callbackId: String) {
         self.eventSourceRequest?.cancel()
         self.eventSourceRequest = nil
-        sendPluginResult(callbackId: callbackId, status: CDVCommandStatus_OK, message: "Event Source Stopped")
+        sendPluginResult(callbackId: callbackId, status: CDVCommandStatus_OK, message: "{\"event\":\"sseDisconnectInternal\",\"serverMessage\":\"NullMessage\"}")
     }
     
     @objc(stopEventSource:)
