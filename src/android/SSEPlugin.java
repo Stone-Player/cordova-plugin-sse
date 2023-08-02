@@ -28,7 +28,9 @@ public class SSEPlugin extends CordovaPlugin {
         this.callbackContext = callbackContext;
 
         if (action.equals("startEventSource")) {
-            startEventSource(args.getString(0)); // Assuming the first argument is the URL
+            if(eventSource == null) { // Check if connection already exists
+                startEventSource(args.getString(0)); // Assuming the first argument is the URL
+            }
             return true;
         } else if (action.equals("stopEventSource")) {
             stopEventSource();
@@ -40,7 +42,6 @@ public class SSEPlugin extends CordovaPlugin {
     private void startEventSource(String url) {
         client = new OkHttpClient.Builder()
                 .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
 
         Request request = new Request.Builder()
@@ -55,7 +56,7 @@ public class SSEPlugin extends CordovaPlugin {
                     result.put("event", type != null ? type : "NullEvent");
                     result.put("serverMessage", data != null ? data : "NullMessage");
 
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, result);
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, result.toString());
                     pluginResult.setKeepCallback(true); // keep callback after this call
                     callbackContext.sendPluginResult(pluginResult);
                 } catch (JSONException e) {
