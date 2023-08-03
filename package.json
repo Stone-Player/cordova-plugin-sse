@@ -1,10 +1,10 @@
 {
-  "name": "cordova-plugin-sse_ios",
+  "name": "cordova-plugin-sse",
   "version": "1.0.0",
   "description": "",
   "cordova": {
-    "id": "cordova-plugin-sse_ios",
-    "platforms": [ "ios" ]
+    "id": "cordova.plugin.sse",
+    "platforms": [ "ios","android" ]
   },
   "keywords": [
     "ecosystem:cordova"

@@ -1,26 +1,36 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-sse_ios" version="1.0"
+<plugin id="cordova.plugin.sse" version="1.0"
 	xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<name>cordova-plugin-sse_ios</name>
+	<name>cordova-plugin-sse</name>
 	<js-module name="cordova-plugin-sse_ios" src="www/cordova-plugin-sse_ios.js">
 		<clobbers target="cordova.plugins.sse" />
 	</js-module>
 	<platform name="ios">
-		<hook type="before_plugin_install" src="hooks/add_swift_support.js" />
+		<hook src="hooks/add_swift_support.js" type="before_plugin_install" />
 		<podspec>
-            <config>
-                <source url="https://cdn.cocoapods.org/"/>
-            </config>
-            <pods use-frameworks="true">
-                <pod name="AlamofireEventSource" spec="~> 1.2"/>
-            </pods>
-        </podspec>
+			<config>
+				<source url="https://cdn.cocoapods.org/" />
+			</config>
+			<pods use-frameworks="true">
+				<pod name="AlamofireEventSource" spec="~&gt; 1.2" />
+			</pods>
+		</podspec>
 		<config-file parent="/*" target="config.xml">
 			<feature name="SSEPlugin">
 				<param name="ios-package" value="SSEPlugin" />
 			</feature>
 		</config-file>
 		<source-file src="src/ios/SSEPlugin.swift" />
+	</platform>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="SSEPlugin">
+				<param name="android-package" value="cordova.plugin.sse.SSEPlugin" />
+			</feature>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml"></config-file>
+		<source-file src="src/android/SSEPlugin.java" target-dir="src/cordova/plugin/sse" />
+		<framework src="src/android/custom.gradle" custom="true" type="gradleReference" />
 	</platform>
 </plugin>
