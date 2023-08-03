@@ -29,7 +29,7 @@ public class SSEPlugin extends CordovaPlugin {
 
         if (action.equals("startEventSource")) {
             if(eventSource == null) { // Check if connection already exists
-                startEventSource(args.getString(0)); // Assuming the first argument is the URL
+                startEventSource(args.getString(0));
             }
             return true;
         } else if (action.equals("stopEventSource")) {
@@ -57,7 +57,7 @@ public class SSEPlugin extends CordovaPlugin {
                     result.put("serverMessage", data != null ? data : "NullMessage");
 
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, result.toString());
-                    pluginResult.setKeepCallback(true); // keep callback after this call
+                    pluginResult.setKeepCallback(true);
                     callbackContext.sendPluginResult(pluginResult);
                 } catch (JSONException e) {
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, "Error serializing JSON");
