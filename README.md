@@ -7,7 +7,7 @@ This is a Cordova plugin for Server-Sent Events (SSE). It provides an interface 
 To install the plugin, use the following command:
 
 ```bash
-cordova plugin add https://github.com/andregrillo/cordova-plugin-sse.git
+cordova plugin add https://github.com/bitradteam/cordova-plugin-sse.git
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ cordova.plugins.sse.stopEventSource(
 ```
 
 ## Author
-André Grillo - OutSystems
+BIT RAD Team
 
 ## License
 
