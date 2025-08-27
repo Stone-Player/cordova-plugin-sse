@@ -41,8 +41,8 @@ public class SSEPlugin extends CordovaPlugin {
 
     private void startEventSource(String url) {
         client = new OkHttpClient.Builder()
-        .eventListener(EventListener.NONE) 
-                .readTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .retryOnConnectionFailure(true)
                 .build();
 
         Request request = new Request.Builder()
